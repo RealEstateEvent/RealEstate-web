@@ -1,0 +1,12 @@
+<section class="cstm_tab">
+    <div class="container">
+        <h1>Upcoming Talks</h1> <br />
+        <ng-container *ngIf="evtDetails">
+            <div class="div1" *ngFor="let agenda of evtDetails.agendaList">
+                <h3> {{ agenda.title }} </h3>
+                <h4> {{ agenda.format }} </h4>
+                <a [routerLink]="['/webinar-speaker']" [queryParams]="{meetingid: agenda.id}" [state]="{ evt_id: evtDetails.event_id }" class="default_btn">Check In</a>
+            </div>
+        </ng-container>
+    </div>
+</section>

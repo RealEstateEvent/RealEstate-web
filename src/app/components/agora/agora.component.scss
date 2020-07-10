@@ -1,0 +1,29 @@
+#remote-container video {
+    height: auto;
+    position: relative !important;
+}
+
+#local {
+    position: relative;
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+}
+
+#local video {
+    position: relative !important;
+}
+
+:host ::ng-deep #local div {
+    height: 400px!important;
+}
+
+:host ::ng-deep #remote-container {
+    display: flex;
+}
+
+
+:host ::ng-deep #remote-container div {
+    width: 200px;
+    height: 200px;
+}

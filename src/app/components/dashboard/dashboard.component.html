@@ -1,0 +1,167 @@
+<div class="page_wrapper wdth100">
+      
+  <header>
+    <div class="container">
+      <div class="wrap_header">
+         <div class="logo_row">
+            <h2 class="logo mg0">Logo <span class="light_orange"> Name</span></h2>
+         </div>
+
+         <div class="rgt_part">
+            <div class="dropdown profile_dropdown">
+              <button class="dropdown-toggle" type="button" data-toggle="dropdown">
+                <span class="profile_img"><img src="assets/images/user.png"> <span class="profile_name">John William</span></span>
+              <span class="caret"> </span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#">My Profile</a></li>
+                <li><a href="#">Setting</a></li>
+                <li><a href="#">Logout</a></li>
+              </ul>
+            </div>
+         </div>
+       </div>
+   </div>
+  </header>
+
+
+  <section class="banner">
+       <h1>My Events</h1>
+  </section>
+   
+  <section class="cstm_tab">
+    <div class="container">
+        <ul class="nav nav-tabs ">
+          <li><a class="active" data-toggle="tab" href="#home">Upcoming Events</a></li>
+          <li><a data-toggle="tab" href="#menu1">Past Events</a></li>
+         
+        </ul>
+
+        <div class="tab-content">
+          <div id="home" class="tab-pane fade in active show">
+            <h3 class="tab_heading">Upcoming <span class="font_wgt500">Events</span></h3>
+            <div class="events_row">
+               <div class="events_col" *ngFor="let evt of upcomingEvts">
+                 <div class="event_img">
+                    <img src="assets/images/events_1.jpg">
+                    <div class="date_event">
+                      <span class="date"> {{ evt.startTime | date :'dd'}} </span>
+                      <span> {{ evt.startTime | date :'MMM'}} </span>
+
+                    </div>
+                   <ul class="event_list">
+                     <li class="ograniser"><a href="">Ogranizer</a></li>
+                     <li class="speaker"><a href="">Speaker</a></li>
+                   </ul>
+                 </div>
+                 <div class="event_contnt">
+                   <div class="time_schdule">
+                     <p><i class="fa fa-calendar" aria-hidden="true"></i> {{ evt.startTime | date :'dd MMM'}} - {{ evt.endTime | date :'dd MMM'}}</p>
+                     <p><i class="fa fa-clock-o" aria-hidden="true"></i> {{ evt.startTime | date :'h.mm a'}} - {{ evt.endTime | date :'h:mm a'}} </p>
+                   </div>
+                  
+                   <h4> {{ evt.title }} </h4>
+                   <p> {{ evt.description }} </p>
+
+                    <a [routerLink]="['/dashboard',evt.event_id,'talks']" class="default_btn">View details</a>
+                 </div>
+               </div>
+
+            </div>
+          </div>
+          <div id="menu1" class="tab-pane fade">
+            <h3 class="tab_heading">Past <span class="font_wgt500">Events</span></h3>
+            <div class="events_row">
+               <div class="events_col">
+                 <div class="event_img">
+                    <img src="assets/images/events_1.jpg">
+                    <div class="date_event">
+                      <span class="date">05 </span>
+                      <span>Jun</span>
+
+                    </div>
+                   <ul class="event_list">
+                     <li class="ograniser"><a href="">Ogranizer</a></li>
+                     <li class="speaker"><a href="">Speaker</a></li>
+                   </ul>
+                 </div>
+                 <div class="event_contnt">
+                   <div class="time_schdule">
+                     <p><i class="fa fa-calendar" aria-hidden="true"></i> 05 July - 10 July</p>
+                     <p><i class="fa fa-clock-o" aria-hidden="true"></i> 8.00 am - 10.00 am</p>
+                   </div>
+                  
+                   <h4>Software for Space</h4>
+                   <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+
+                 </div>
+
+
+               </div>
+               <div class="events_col">
+                 <div class="event_img">
+                    <img src="assets/images/events_1.jpg">
+                    <div class="date_event">
+                      <span class="date">09</span>
+                      <span>Jul</span>
+
+                    </div>
+                   <ul class="event_list">
+                     <li class="ograniser"><a href="">Ogranizer</a></li>
+                     <li class="speaker"><a href="">Speaker</a></li>
+                   </ul>
+                 </div>
+                 <div class="event_contnt">
+
+                   <div class="time_schdule">
+                     <p><i class="fa fa-calendar" aria-hidden="true"></i> 09 July - 15 July</p>
+                     <p><i class="fa fa-clock-o" aria-hidden="true"></i> 8.00 am - 10.00 am</p>
+                   </div>
+                   <h4>Software for Space</h4>
+                   <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+
+                    <a href="" class="default_btn">View details</a>
+                 </div>
+
+
+               </div>
+               <div class="events_col">
+                 <div class="event_img">
+                    <img src="assets/images/events_1.jpg">
+                    <div class="date_event">
+                      <span class="date">10 </span>
+                      <span>Aug</span>
+
+                    </div>
+                   <ul class="event_list">
+                     <li class="ograniser"><a href="">Ogranizer</a></li>
+                     <li class="speaker"><a href="">Speaker</a></li>
+                   </ul>
+                 </div>
+                 <div class="event_contnt">
+                   
+                   <div class="time_schdule">
+                     <p><i class="fa fa-calendar" aria-hidden="true"></i> 10 Aug - 15 Aug</p>
+                     <p><i class="fa fa-clock-o" aria-hidden="true"></i> 10.00 am - 1.00 pm</p>
+                   </div>
+                  
+                   <h4>Software for Space</h4>
+                   <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+
+                    <a href="" class="default_btn">View details</a>
+                 </div>
+
+
+               </div>
+             
+            </div>
+          </div>
+         
+        </div>
+    </div>
+  </section> 
+
+  <footer>
+    <p>All copyright are reserved 2020</p>
+  </footer>
+   
+  </div>

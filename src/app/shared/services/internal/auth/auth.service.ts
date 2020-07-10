@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, of, Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { AccountService } from '../../api/auth/account/account.service';
@@ -53,7 +53,7 @@ export class AuthService implements OnDestroy {
 
     redirectLoginControl() {
         return new Promise((resolve, reject) => {
-            this._router.navigate([''])
+            this._router.navigate(['/dashboard'])
                 .then(() => {
                     resolve('');
                 });

@@ -23,6 +23,8 @@
     "popper.js": "1.16.1",
     "bootstrap": "^4.4.1",
     "jwt-decode": "^2.2.0",
+    "agora-rtc-sdk": "^3.1.1",
+    "agora-rtm-sdk": "^1.3.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

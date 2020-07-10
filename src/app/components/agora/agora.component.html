@@ -1,0 +1,27 @@
+<div id="conference">
+    <button (click)="leave()">leave</button>
+    <div id="winConfig">
+        <h4>My Feed :</h4>
+        <button (click)="muteVideo()">Mute Video</button>
+        <button (click)="unmuteVideo()">Unmute Video</button>
+        <button (click)="muteAudio()">Mute Audio</button>
+        <button (click)="unmuteAudio()">Unmute Audio</button>
+    </div>
+    <div id="local">
+
+    </div>
+
+    <h4>Remote Feeds :</h4>
+    <div id="remote-container">
+
+    </div>
+    <div id="msg">
+        <label>User Id: (Local)</label>
+        <p id="userId"></p>
+        <input placeholder="Enter your message" id="mes" #message>
+        <button (click)="sendMessage()">Send message</button>
+    </div>
+    <div id="messageSection">
+
+    </div>
+</div>

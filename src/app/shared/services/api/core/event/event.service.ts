@@ -21,7 +21,7 @@ export class EventService {
     return this.http.get(environment.apiUrl + `event?id=${id}`);
   }
 
-  fetchMyEvents(page_no, limit) {
-    return this.http.get(environment.apiUrl + `event/my?isPast=false&page=${page_no}&limit=${limit}`);
+  fetchMyEvents(isPast, page_no, limit) {
+    return this.http.get(environment.apiUrl + `event/my?isPast=${isPast}&page=${page_no}&limit=${limit}`);
   }
 }
