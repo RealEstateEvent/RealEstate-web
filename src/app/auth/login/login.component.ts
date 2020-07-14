@@ -27,6 +27,9 @@ export class LoginComponent implements OnInit {
         console.log("value",value);
       }, (err) => {
         console.log("err",err);
+        if(err === 2) {
+          alert('For now there is only support for organizer and speaker. Please use our android and ios app if you are attendee.')
+        }
       });
     } else {
       alert('inputs are not valid');
