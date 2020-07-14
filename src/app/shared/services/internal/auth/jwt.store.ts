@@ -23,8 +23,16 @@ export class JwtStore {
     return this._decodedJwt;
   }
 
-  get email() :string{
+  get email() :string {
     return this._decodedJwt.authEntry.email;
+  }
+
+  get userID() : string {
+    return this._decodedJwt.authEntry.user_id;
+  }
+
+  get userType() : number {
+    return this._decodedJwt.authEntry.userType;
   }
 
 }

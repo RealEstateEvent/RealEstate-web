@@ -12,7 +12,7 @@ export class AuthService implements OnDestroy {
     private _jwtStore: JwtStore;
     public _refreshToken: string;
 
-    private _initialData: string[] = [ 'token' ];
+    private _initialData: string[] = ['token'];
 
     constructor(private _appStorage: StorageService,
         private accountService: AccountService,
@@ -39,12 +39,17 @@ export class AuthService implements OnDestroy {
 
     public logIn(formValue: { email: string, password: string }) {
         return new Promise((resolve, reject) => {
-            this.accountService.loginUser(formValue).subscribe((res) => {
-                this._saveValue('token',res.headers.get('X-Auth'));
+            this.accountService.loginUser(formValue).subscribe((res: any) => {
+                if (res.body.data.userType === 2) {
+                    reject(res.body.data.userType);
+                } else {
+                    this._saveValue('token', res.headers.get('X-Auth'));
 
-                this.redirectLoginControl().then(() => {
-                    resolve(res.body);
-                })
+                    this.redirectLoginControl().then(() => {
+                        resolve(res.body);
+                    })
+                }
+
             }, (err) => {
                 reject(err.error);
             });
@@ -62,6 +67,14 @@ export class AuthService implements OnDestroy {
 
     getEmailFromToken() {
         return this._jwtStore.email;
+    }
+
+    getUserIDFromToken() {
+        return this._jwtStore.userID;
+    }
+
+    getUserTypeFromToken() {
+        return this._jwtStore.userType;
     }
 
     public clearData() {
