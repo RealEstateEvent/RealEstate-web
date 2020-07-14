@@ -1,5 +1,15 @@
-.div1 {
-    border: 1px solid red;
-    padding: 20px;
-    margin: 20px;
+a:hover {
+    text-decoration: none;
+}
+
+li {
+    margin-bottom: 10px!important;
+}
+
+.cstm_tab .nav-tabs>li>a.active {
+    color: #fff;
+    cursor: default;
+    background-color: #ffa400;
+    border: none;
+    border-bottom-color: transparent;
 }

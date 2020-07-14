@@ -1,12 +1,142 @@
-<section class="cstm_tab">
+<!-- <section class="cstm_tab">
     <div class="container">
         <h1>Upcoming Talks</h1> <br />
         <ng-container *ngIf="evtDetails">
             <div class="div1" *ngFor="let agenda of evtDetails.agendaList">
                 <h3> {{ agenda.title }} </h3>
                 <h4> {{ agenda.format }} </h4>
-                <a [routerLink]="['/webinar-speaker']" [queryParams]="{meetingid: agenda.id}" [state]="{ evt_id: evtDetails.event_id }" class="default_btn">Check In</a>
+                <a (click)="checkIn(agenda.id)" class="default_btn">Check In</a>
             </div>
         </ng-container>
+    </div>
+</section> -->
+
+<section class="banner banner_details">
+    <h1> Events details </h1>
+</section>
+
+<section class="cstm_tab" *ngIf="evtDetails">
+    <div class="container">
+
+        <div class="events_col details">
+            <div class="event_img">
+                <img src="assets/images/events_1.jpg">
+                <div class="date_event">
+                    <span class="date"> {{ evtDetails.startTime | date :'dd'}} </span>
+                    <span> {{ evtDetails.startTime | date :'MMM'}} </span>
+                </div>
+
+            </div>
+            <div class="event_contnt">
+                <div class="time_schdule">
+                    <p><i class="fa fa-calendar" aria-hidden="true"></i> {{ evtDetails.startTime | date :'dd MMM'}} -
+                        {{ evtDetails.endTime | date :'dd MMM'}} </p>
+                    <p><i class="fa fa-clock-o" aria-hidden="true"></i> {{ evtDetails.startTime | date :'h.mm a'}} -
+                        {{ evtDetails.endTime | date :'h:mm a'}} </p>
+                </div>
+
+                <h4> {{ evtDetails.title }} </h4>
+                <p> {{ evtDetails.description }} </p>
+
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs ">
+            <li><a class="active" data-toggle="tab" href="#home">Speakers</a></li>
+            <li><a data-toggle="tab" href="#menu1">Agenda</a></li>
+            <li><a data-toggle="tab" href="#menu2">Attendee</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active show">
+                <h3 class="tab_heading">Speakers</h3>
+                <div class="events_row">
+                    <div class="events_col" *ngFor="let speaker of evtDetails.speakerList">
+                        <div class="event_img">
+                            <img src="assets/images/user.png">
+
+                            <ul class="event_list">
+                                <li><a>Keynote Speaker</a></li>
+                            </ul>
+                        </div>
+                        <div class="event_contnt">
+                            <h4> {{ speaker.firstName }} {{ speaker.lastName }} </h4>
+                            <a class="speaker_feature"> {{ speaker.role }} </a>
+                            <p> {{ speaker.description }} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="menu1" class="tab-pane fade">
+                <h3 class="tab_heading">Agenda</h3>
+                <div class="events_row">
+                    <div class="events_col agenda_col" *ngFor="let agenda of evtDetails.agendaList">
+
+                        <div class="event_contnt agenda_contnt">
+                            <h4> {{ agenda.title }} </h4>
+                            <div class="time_schdule mg0">
+                                <p><i class="fa fa-calendar" aria-hidden="true"></i>
+                                    {{ agenda.startTime | date :'dd MMM'}} -
+                                    {{ agenda.endTime | date :'dd MMM'}} </p>
+                                <p><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    {{ agenda.startTime | date :'h.mm a'}} -
+                                    {{ agenda.endTime | date :'h:mm a'}} </p>
+                            </div>
+
+
+                            <p> {{ agenda.description }} </p>
+
+
+
+                            <h4>Speaker</h4>
+
+                            <ul class="speaker_list">
+                                <li *ngFor="let speaker of agenda.speakers | slice:0:4">
+                                    <a data-toggle="tooltip" title="{{ speaker.firstName}} {{ speaker.lastName}}">
+                                        <img src="assets/images/user.png">
+                                    </a>
+                                </li>
+                                <li><button type="button" class="view_more" (click)="toggleMoreSpeaker()">View More</button></li>
+                            </ul>
+
+                            <div class="bottom_btn">
+                                <a class="default_btn" (click)="checkIn(agenda.id)"> Check In </a>
+                            </div>
+
+
+                        </div>
+                        <div [ngClass]="isMoreSpeaker?'spkr full_hover1':'spkr'">
+                            <a class="close_list" (click)="toggleMoreSpeaker()"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            <ul>
+                                <li *ngFor="let speaker of agenda.speakers | slice:4">
+                                    <img src="assets/images/user.png">
+                                    <span class="spkr_contnt">
+                                        <span class="name"> {{ speaker.firstName}} {{ speaker.lastName}} </span>
+                                        <span class="role"> {{ speaker.role}} </span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="menu2" class="tab-pane fade in ">
+                <h3 class="tab_heading">Attendee</h3>
+                <div class="events_row">
+                    <div class="events_col" *ngFor="let attendee of evtDetails.attendeeList.docs">
+                        <div class="event_img">
+                            <img src="assets/images/user.png">
+                        </div>
+                        <div class="event_contnt">
+                            <h4> {{ attendee.firstName }} {{ attendee.lastName }} </h4>
+                            <a class="speaker_feature"> {{ attendee.role }} </a>
+                            <p> {{ attendee.description }} </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </section>
