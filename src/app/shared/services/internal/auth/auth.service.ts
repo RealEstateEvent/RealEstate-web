@@ -84,6 +84,7 @@ export class AuthService implements OnDestroy {
 
     public logOut() {
         this.clearData();
+        this._redirectToLoginPage();
     }
 
     public isTokenValid(): Observable<boolean> {
@@ -109,5 +110,9 @@ export class AuthService implements OnDestroy {
         if (key === 'token') {
             this.token = value;
         }
+    }
+
+    _redirectToLoginPage() {
+        this._router.navigate(['/login']);
     }
 }
