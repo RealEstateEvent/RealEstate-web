@@ -13,7 +13,7 @@ import { DataSharedService } from '../../shared/services/internal/data-shared/da
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AgoraComponent implements OnInit, OnDestroy {
-
+  isMsgPaneOpen: boolean = false;
   evt_data;
   agenda_id;
   chatClient;
@@ -51,6 +51,10 @@ export class AgoraComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dataSharedService.setAgoraStatus(false);
+  }
+
+  toggleMsgPane() {
+    this.isMsgPaneOpen = !this.isMsgPaneOpen;
   }
 
   startCall() {

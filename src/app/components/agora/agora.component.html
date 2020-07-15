@@ -37,7 +37,7 @@
         </div>
         <div class="list_icn">
             <a><i class="fa fa-users" aria-hidden="true"></i><span>3</span></a>
-            <a class="chat_icn active"> <i class="fa fa-comments" aria-hidden="true"></i></a>
+            <a class="chat_icn" (click)="toggleMsgPane()" [ngClass]="isMsgPaneOpen ?'active':''"> <i class="fa fa-comments" aria-hidden="true"></i></a>
         </div>
     </div>
     <div class="main_wrapr no_sidebar wdth100">
@@ -53,7 +53,7 @@
             </div>
 
         </div>
-        <div class="chat_wrapper show_sidebar">
+        <div class="chat_wrapper" [ngClass]="isMsgPaneOpen ?'show_sidebar':''">
             <div class="chat_body_wrap wdth100">
                 <div class="chat_body wdth100">
                     <div id="messageSection"  class="wdth100">

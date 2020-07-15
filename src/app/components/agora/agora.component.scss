@@ -54,7 +54,8 @@ a:focus {
 }
 
 .video_panel {
-	width: calc(100% - 350px);
+	// width: calc(100% - 350px);
+	width: 100%;
 	float: left;
 	height: 100%;
 }
