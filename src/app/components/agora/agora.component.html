@@ -32,16 +32,20 @@
             <span><img src="assets/images/chat/ball.png" alt="">Real Estate</span>
         </div>
         <div class="live_icon online">
+            <span class="notifide_icon" style="background:#36e836">&nbsp;</span>
             <span>Live</span>
         </div>
+        <div class="list_icn">
+            <a><i class="fa fa-users" aria-hidden="true"></i><span>3</span></a>
+            <a class="chat_icn active"> <i class="fa fa-comments" aria-hidden="true"></i></a>
+        </div>
     </div>
-    <div class="main_wrapr wdth100">
+    <div class="main_wrapr no_sidebar wdth100">
         <div class="video_panel">
-            <div id="video_call_wrapr" class="wdth100">
+            <div id="video_call_wrapr" class="video_wrapr one_screen wdth100">
                 <div class="video_col">
-                    <!-- <img src="assets/images/chat/man_avatar3.jpg">
-                    <span class="participant_avatar">
-                        <img src="assets/images/chat/man_avatar3.jpg">
+                    <!-- <span class="participant_avatar">
+                        <img src="assets/images/man_avatar3.jpg">
                     </span> -->
                     <div id="local">
                     </div>
@@ -49,19 +53,7 @@
             </div>
 
         </div>
-        <div class="chat_wrapper">
-            <div class="chat_header">
-                <a class="back_icn">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </a>
-
-                <div class="list_icn">
-                    <a> <i class="fa fa-users" aria-hidden="true"></i>3</a>
-                    <a> <i class="fa fa-comments" aria-hidden="true"></i></a>
-                </div>
-
-
-            </div>
+        <div class="chat_wrapper show_sidebar">
             <div class="chat_body_wrap wdth100">
                 <div class="chat_body wdth100">
                     <div id="messageSection"  class="wdth100">
@@ -81,7 +73,7 @@
                             <span class="search_user"><img src="assets/images/chat/profile_img.png"> </span>
 
                         </div>
-                        <input type="text" class="chat_input" placeholder="type a message" #message>
+                        <input type="text" class="chat_input" placeholder="Type a message" #message>
                         <div class="pos_rel">
                             <a (click)="sendMessage()" class="sent_icn"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></a>
                         </div>
@@ -100,8 +92,8 @@
                     <li>
                         <ul class="inner_list">
                             <li><a (click)="muteVideo()"><img src="assets/images/chat/no-video.png" alt=""></a></li>
-                            <li><a (click)="unmuteVideo()"><img src="assets/images/chat/no-video.png" alt=""></a></li>
-                            <li><a (click)="muteAudio()"><img src="assets/images/chat/mic.png" alt=""></a></li>
+                            <li><a (click)="unmuteVideo()"><img src="assets/images/chat/video.png" alt=""></a></li>
+                            <li><a (click)="muteAudio()"><img src="assets/images/chat/mute.png" alt=""></a></li>
                             <li><a (click)="unmuteAudio()"><img src="assets/images/chat/mic.png" alt=""></a></li>
                         </ul>
                     </li>
