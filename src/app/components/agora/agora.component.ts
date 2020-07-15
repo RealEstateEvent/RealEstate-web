@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as AgoraRTM from 'agora-rtm-sdk';
 import * as AgoraRTC from 'agora-rtc-sdk'
@@ -9,7 +9,8 @@ import { DataSharedService } from '../../shared/services/internal/data-shared/da
 @Component({
   selector: 'app-agora',
   templateUrl: './agora.component.html',
-  styleUrls: ['./agora.component.scss']
+  styleUrls: ['./agora.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AgoraComponent implements OnInit, OnDestroy {
 
@@ -22,6 +23,8 @@ export class AgoraComponent implements OnInit, OnDestroy {
   localStream;
   user_id;
   remoteStreams = [];
+  isMuteVideo: boolean = false;
+  isMuteAudio: boolean = false;
   @ViewChild('message', { static: true }) message: ElementRef;
 
   constructor(private route: ActivatedRoute,
@@ -185,7 +188,7 @@ export class AgoraComponent implements OnInit, OnDestroy {
         console.log("SSSSSSSSSSSSSSSSSSSS@user", user);
         this.addChatIntoView(user, text);
       } else {
-        let user = this.searchUserDetails(senderArr[0], $this.evt_data.attendeeList);
+        let user = this.searchUserDetails(senderArr[0], $this.evt_data.attendeeList.docs);
         console.log("@@@@@@@@@@@@@@@@@@@@@user", user);
         this.addChatIntoView(user, text);
       }
@@ -206,6 +209,7 @@ export class AgoraComponent implements OnInit, OnDestroy {
     console.log("message :- ", text)
     this.chatChannel.sendMessage({ text: text }).then(() => {
       let user = this.searchUserDetails(this.user_id, $this.evt_data.speakerList);
+      $this.message.nativeElement.value = '';
       console.log("@@@@@@@@@@@@@@",user);
       this.addChatIntoView(user, text);
     }).catch(error => {
@@ -231,7 +235,11 @@ export class AgoraComponent implements OnInit, OnDestroy {
     mainnode.appendChild(usernode);
     mainnode.appendChild(rolenode);
     mainnode.appendChild(msgnode);
-    mainnode.className = "incoming_msg";
+    if(user.id === this.user_id) {
+      mainnode.className = "outgoing_msg";
+    } else {
+      mainnode.className = "incoming_msg";
+    }
     document.getElementById("messageSection").appendChild(mainnode);
   }
 
@@ -264,17 +272,21 @@ export class AgoraComponent implements OnInit, OnDestroy {
 
   muteVideo() {
     this.localStream.muteVideo();
+    this.isMuteVideo = true;
   }
 
   unmuteVideo() {
     this.localStream.unmuteVideo();
+    this.isMuteVideo = false;
   }
 
   muteAudio() {
     this.localStream.muteAudio();
+    this.isMuteAudio = true;
   }
 
   unmuteAudio() {
     this.localStream.unmuteAudio();
+    this.isMuteAudio = false;
   }
 }

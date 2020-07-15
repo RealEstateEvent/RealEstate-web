@@ -5,7 +5,7 @@
                 <h2 class="logo mg0">Logo <span class="light_orange"> Name</span></h2>
             </div>
 
-            <div class="rgt_part">
+            <div class="rgt_part" *ngIf="isAuthenticated()">
                 <div class="dropdown profile_dropdown">
                     <button class="dropdown-toggle" type="button" data-toggle="dropdown">
                         <span class="profile_img"><img src="assets/images/user.png"> <span class="profile_name">John

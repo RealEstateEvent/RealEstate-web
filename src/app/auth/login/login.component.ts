@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/internal/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,11 @@ export class LoginComponent implements OnInit {
   public form: FormGroup;
 
   constructor(private _auth: AuthService,
-    private formBuilder: FormBuilder,) {
+    private formBuilder: FormBuilder,
+    private router: Router) {
+      if(this._auth.isAuthenticated()) {
+        this.router.navigate(['/dashboard']);
+      }
   }
 
   ngOnInit() {

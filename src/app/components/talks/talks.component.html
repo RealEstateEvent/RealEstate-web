@@ -20,7 +20,7 @@
 
         <div class="events_col details">
             <div class="event_img">
-                <img src="assets/images/events_1.jpg">
+                <img src="{{ evtDetails.coverPhoto }}">
                 <div class="date_event">
                     <span class="date"> {{ evtDetails.startTime | date :'dd'}} </span>
                     <span> {{ evtDetails.startTime | date :'MMM'}} </span>
@@ -53,11 +53,11 @@
                 <div class="events_row">
                     <div class="events_col" *ngFor="let speaker of evtDetails.speakerList">
                         <div class="event_img">
-                            <img src="assets/images/user.png">
+                            <img src="{{ speaker.profilePicThumb }}">
 
-                            <ul class="event_list">
+                            <!-- <ul class="event_list">
                                 <li><a>Keynote Speaker</a></li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="event_contnt">
                             <h4> {{ speaker.firstName }} {{ speaker.lastName }} </h4>
@@ -93,7 +93,7 @@
                             <ul class="speaker_list">
                                 <li *ngFor="let speaker of agenda.speakers | slice:0:4">
                                     <a data-toggle="tooltip" title="{{ speaker.firstName}} {{ speaker.lastName}}">
-                                        <img src="assets/images/user.png">
+                                        <img src="{{ speaker.profilePicThumb }}">
                                     </a>
                                 </li>
                                 <li><button type="button" class="view_more" (click)="toggleMoreSpeaker()">View More</button></li>
@@ -126,7 +126,7 @@
                 <div class="events_row">
                     <div class="events_col" *ngFor="let attendee of evtDetails.attendeeList.docs">
                         <div class="event_img">
-                            <img src="assets/images/user.png">
+                            <img src="{{ attendee.profilePicThumb }}">
                         </div>
                         <div class="event_contnt">
                             <h4> {{ attendee.firstName }} {{ attendee.lastName }} </h4>
