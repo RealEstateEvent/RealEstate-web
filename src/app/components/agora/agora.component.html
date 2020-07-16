@@ -42,7 +42,7 @@
     </div>
     <div class="main_wrapr no_sidebar wdth100">
         <div class="video_panel">
-            <div id="video_call_wrapr" [ngClass]="remoteStreams.length == 0 ?'one_screen':''" class="video_wrapr wdth100">
+            <div id="video_call_wrapr" [ngClass]="isOneScreen ? 'one_screen' : ''" class="video_wrapr wdth100">
                 <div class="video_col">
                     <!-- <span class="participant_avatar">
                         <img src="assets/images/man_avatar3.jpg">
@@ -59,13 +59,13 @@
                     <div id="messageSection"  class="wdth100">
                     </div>
                 </div>
-                <form class="write_msg wdth100" (ngSubmit)="sendMessage()">
+                <form [formGroup]="form" class="write_msg wdth100" (ngSubmit)="sendMessage()">
                     <div class="chat_wrap wdth100">
                         <div class="wdth100">
                             <span class="search_user"><img src="assets/images/chat/profile_img.png"></span>
-                            <input type="text" class="chat_input" placeholder="Type a message" #message>
+                            <input type="text" formControlName="msg" class="chat_input" placeholder="Type a message">
                         </div>
-                        <button type="submit" (click)="sendMessage()" class="sent_icn"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                        <button type="submit" class="sent_icn"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </div>
                 </form>
             </div>

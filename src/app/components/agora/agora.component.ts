@@ -14,6 +14,7 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/services/internal/auth/auth.service';
 import { DataSharedService } from '../../shared/services/internal/data-shared/data-shared.service';
 import { ChatService } from '../../shared/services/socket/socket.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-agora',
@@ -35,13 +36,15 @@ export class AgoraComponent implements OnInit, OnDestroy {
   remoteStreams = [];
   isMuteVideo: boolean = false;
   isMuteAudio: boolean = false;
-  @ViewChild('message', { static: true }) message: ElementRef;
+  isOneScreen: boolean = true;
+  public form: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private chatService: ChatService,
+    private formBuilder: FormBuilder,
     private dataSharedService: DataSharedService
   ) {
     this.dataSharedService.setAgoraStatus(true);
@@ -56,6 +59,9 @@ export class AgoraComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      msg: ['', [Validators.required]],
+    }); 
     this.agenda_id = this.route.snapshot.queryParams.meetingid;
     //role can be of "host" or "audience".
     this.role = 'host';
@@ -141,6 +147,9 @@ export class AgoraComponent implements OnInit, OnDestroy {
     this.streamClient.on('stream-subscribed', function (evt) {
       var remoteStream = evt.stream;
       $this.remoteStreams.push(evt);
+      if($this.remoteStreams.length > 0) {
+        $this.isOneScreen = false;
+      }
       var id = remoteStream.getId();
       // Add a view for the remote stream.
       $this.addVideoStream('remote_video_' + id);
@@ -154,7 +163,15 @@ export class AgoraComponent implements OnInit, OnDestroy {
       console.log('@@@@@@@@@@@@@@@unpublish@@@@@@@@@');
     });
     // client.on('stream-removed', removeVideoStream);
-    this.streamClient.on('peer-leave', this.removeVideoStream);
+    this.streamClient.on('peer-leave', (evt) => {
+      var remoteStream = evt.stream;
+      $this.remoteStreams = $this.remoteStreams.filter(evt => evt.stream.getId() !== remoteStream.getId());
+      console.log(`${evt.uid} left from this channel`);
+      if($this.remoteStreams.length == 0) {
+        this.isOneScreen = true;
+      }
+      $this.removeVideoStream(evt);
+    });
   }
 
   addVideoStream(streamId) {
@@ -242,8 +259,9 @@ export class AgoraComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     let $this = this;
-    let text = this.message.nativeElement.value;
+    let text = this.form.value.msg;
     console.log('message :- ', text);
+    if(this.form.valid) {
     this.chatChannel
       .sendMessage({ text: text })
       .then(() => {
@@ -251,7 +269,7 @@ export class AgoraComponent implements OnInit, OnDestroy {
           this.user_id,
           $this.evt_data.speakerList
         );
-        $this.message.nativeElement.value = '';
+        $this.form.reset();
         console.log('@@@@@@@@@@@@@@', user);
         this.addChatIntoView(user, text);
         this.sendSocketMessage(text, this.agenda_id, this.user_id);
@@ -259,6 +277,7 @@ export class AgoraComponent implements OnInit, OnDestroy {
       .catch((error) => {
         console.log(`send message faild userId : ${text} Error: ${error}`);
       });
+    }
   }
 
   addChatIntoView(user, msg) {
