@@ -59,20 +59,15 @@
                     <div id="messageSection"  class="wdth100">
                     </div>
                 </div>
-                <div class="write_msg wdth100">
+                <form class="write_msg wdth100" (ngSubmit)="sendMessage()">
                     <div class="chat_wrap wdth100">
-                        <div class=" pos_rel">
-                            <span class="search_user"><img src="assets/images/chat/profile_img.png"> </span>
-
+                        <div class="wdth100">
+                            <span class="search_user"><img src="assets/images/chat/profile_img.png"></span>
+                            <input type="text" class="chat_input" placeholder="Type a message" #message>
                         </div>
-                        <input type="text" class="chat_input" placeholder="Type a message" #message>
-                        <div class="pos_rel">
-                            <a (click)="sendMessage()" class="sent_icn"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></a>
-                        </div>
-
+                        <button type="submit" (click)="sendMessage()" class="sent_icn"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </div>
-
-                </div>
+                </form>
             </div>
         </div>
     </div>

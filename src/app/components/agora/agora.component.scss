@@ -222,9 +222,9 @@ padding: 15px;
  .left_icon_list .inner_list{
      display: flex;
 }
- .inner_list>li,.emoji_list>li{
-     margin-right: 10px;
-}
+ .left_icon_list .inner_list li a{
+    margin: 0 7px;
+ }  
  .inner_list>li:last-child,.emoji_list>li:last-child{
      margin-right: 0;
 }
@@ -488,7 +488,7 @@ margin-bottom: 0px;
     left: 0;
     display: flex;
     justify-content: space-between;
-    padding: 12px;
+    padding: 9px 12px;
     height: 68px;
     background: #547182;
 }
@@ -514,14 +514,22 @@ margin-bottom: 0px;
      position: absolute;
      right: 12px;
      top: 12px;
+     background: transparent;
+     border: none;
 }
+
+.sent_icn:focus{
+    outline: none;
+}
+
  .camera_icn>img ,.search_user>img{
      width: 26px;
 }
  .search_user {
      position: absolute;
      left: 8px;
-     margin-top: 10px;
+     top: 50%;
+     transform: translateY(-50%);
 }
  .sent_icn i{
      color: #fff;
@@ -534,4 +542,32 @@ margin-bottom: 0px;
 }
  .chat_input:-ms-input-placeholder {
      color: #ccc;
+}
+
+
+@media only screen and (min-width:310px) and (max-width:768px){
+    /*===============Chat Media CSS================*/
+
+        .chat_wrapper {
+            width: 280px;
+            margin-right: -280px;
+        }
+
+        .proj_title span{
+            font-size: 14px;
+        }
+
+        .live_icon {
+            padding: 4px 10px 4px 10px;
+        }
+
+        .list_icn{
+            right: 15px;
+        }
+
+        .list_icn a{
+            width: 34px;
+            height: 34px;
+            line-height: 34px;
+        }
 }
