@@ -9,6 +9,11 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 
+import { environment } from './../environments/environment';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: environment.socketServerUrl, options: {} };
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +26,7 @@ import { FooterComponent } from './components/footer/footer.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     {
