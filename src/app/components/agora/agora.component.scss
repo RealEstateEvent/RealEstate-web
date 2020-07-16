@@ -190,7 +190,7 @@ padding: 15px;
     align-items: center;
     justify-content: center;
 }
- .left_icon_list li a,.emoji_list li a{
+ .left_icon_list li a,.emoji_list li a,.speaker_icn{
     width: 40px;
     height: 40px;
     background: #3b5d70;
@@ -200,6 +200,15 @@ padding: 15px;
     justify-content: center;
     border: 1px solid #466476;
 }
+
+.speaker_icn{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+     background: #000;
+     border: 1px solid #000;
+}
+
  .left_icon_list li a.active{
          background: #f9ba4d;
     border: 1px solid #d99b30;
@@ -214,7 +223,7 @@ padding: 15px;
      padding-right: 0;
      border-right: none;
 }
- .left_icon_list li a img,.emoji_list li a img{
+ .left_icon_list li a img,.emoji_list li a img,.speaker_icn img{
      width: 20px;
      height: 20px;
      object-fit: cover;
@@ -466,7 +475,7 @@ margin-bottom: 0px;
      background: #fd6e2b;
 }
  .chat_speaker {
-        padding: 4px 4px;
+    padding: 4px 4px;
     position: absolute;
     right: 15px;
     top: 10px;
@@ -544,56 +553,121 @@ margin-bottom: 0px;
      color: #ccc;
 }
 
-.mobile_avatar{
+.speaker_icn{
+
+}
+
+.mobile_avatar,
+.mob_video_wrapr{
     display: none;
 }
 
 @media only screen and (min-width:310px) and (max-width:767px){
     /*===============Chat Media CSS================*/
 
-         .mobile_avatar {
-            display: block;
-            position: absolute;
-            right: 20px;
-            top: 90px;
-            width: 110px;
-            height: 110px;
-            z-index: 99;
-            border: 5px solid #fff;
-            border-radius: 100%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, .4);
-        }
-        .mobile_avatar img {
-            border-radius: 100%;
-        }
-        .chat_wrapper.show_sidebar {
-            position: absolute;
-            width: 100%;
-            left: 0;
-        }
-        .chat_body {
-            padding: 10px 10px 10px 10px;
-        }
-        .participant_avatar {
-            width: 100px;
-            height: 100px;
-        }
+    .mobile_avatar {
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 90px;  
+        width: 90px;
+        height: 90px;
+        z-index: 99;
+        border: 5px solid #fff;
+        border-radius: 100%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+    }
+         
+    .mob_video_wrapr{
+        display: flex;
+        position: absolute;
+        right: 20px;
+        top: 80px;
+    }
 
-        .proj_title span{
-            font-size: 14px;
-        }
+    .mob_video_wrapr>li{
+        display: inline-block;
+        margin-right: 10px;
+        position: relative;
+        border: 5px solid #fff;
+        border-radius: 100%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+    }
 
-        .live_icon {
-            padding: 4px 10px 4px 10px;
-        }
+    .mob_video_wrapr>li>a{
+        display: block;
+          width: 45px;
+        height: 45px;
+    }
 
-        .list_icn{
-            right: 15px;
-        }
+    .mob_video_wrapr>li>a>video{
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+    }
 
-        .list_icn a{
-            width: 34px;
-            height: 34px;
-            line-height: 34px;
-        }
+    .mob_video_wrapr li .mute_icn,
+    .mobile_avatar .mute_icn{
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        border: 1px solid #fff;
+        border-radius: 100%;
+        background: #112734;
+        align-items: center;
+        justify-content: center;
+        bottom: -14px;
+        right: -3px;
+    }
+
+    .mob_video_wrapr li .mute_icn>img{
+        border-radius: 100%;
+        width: 16px;
+    }
+
+    .mob_video_wrapr>li:last-child{
+        margin: 0px;
+    }
+
+    .mobile_avatar img,
+    .mobile_video img {
+        border-radius: 100%;
+    }
+
+    .mobile_avatar .mute_icn{
+            bottom: -8px;
+    right: 0px;
+    }
+
+    .chat_wrapper.show_sidebar {
+        position: absolute;
+        width: 100%;
+        left: 0;
+    }
+    .chat_body {
+        padding: 10px 10px 10px 10px;
+    }
+    .participant_avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .proj_title span{
+        font-size: 14px;
+    }
+
+    .live_icon {
+        padding: 4px 10px 4px 10px;
+    }
+
+    .list_icn{
+        right: 15px;
+    }
+
+    .list_icn a{
+        width: 34px;
+        height: 34px;
+        line-height: 34px;
+    }
 }
