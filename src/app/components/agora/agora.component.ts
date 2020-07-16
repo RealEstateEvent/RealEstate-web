@@ -4,6 +4,8 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as AgoraRTM from 'agora-rtm-sdk';
@@ -17,8 +19,11 @@ import { ChatService } from '../../shared/services/socket/socket.service';
   selector: 'app-agora',
   templateUrl: './agora.component.html',
   styleUrls: ['./agora.component.scss'],
+
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AgoraComponent implements OnInit, OnDestroy {
+  isMsgPaneOpen: boolean = false;
   evt_data;
   agenda_id;
   chatClient;
@@ -28,26 +33,29 @@ export class AgoraComponent implements OnInit, OnDestroy {
   localStream;
   user_id;
   remoteStreams = [];
+  isMuteVideo: boolean = false;
+  isMuteAudio: boolean = false;
   @ViewChild('message', { static: true }) message: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private dataSharedService: DataSharedService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private dataSharedService: DataSharedService
   ) {
+    this.dataSharedService.setAgoraStatus(true);
     this.dataSharedService.getEventData().subscribe((evt) => {
       this.evt_data = evt;
+      console.log('------------eventData----------------', this.evt_data);
     });
     this.user_id = this.authService.getUserIDFromToken();
-    alert(this.user_id);
+    // alert(this.user_id);
     this.chatClient = AgoraRTM.createInstance(environment.agoraAppID);
     this.streamClient = AgoraRTC.createClient({ mode: 'live', codec: 'h264' });
   }
 
   ngOnInit(): void {
-    this.dataSharedService.setAgoraStatus(true);
     this.agenda_id = this.route.snapshot.queryParams.meetingid;
     //role can be of "host" or "audience".
     this.role = 'host';
@@ -58,7 +66,13 @@ export class AgoraComponent implements OnInit, OnDestroy {
     this.dataSharedService.setAgoraStatus(false);
   }
 
+  toggleMsgPane() {
+    this.isMsgPaneOpen = !this.isMsgPaneOpen;
+  }
+
   startCall() {
+    let userWithRole = this.user_id + '.' + this.role;
+    console.log('startCall', userWithRole);
     this.streamClient.init(
       environment.agoraAppID,
       () => console.log('AgoraRTC client initialized'),
@@ -74,7 +88,7 @@ export class AgoraComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.streamClient.join(null, this.agenda_id, null, (uid) => {
+    this.streamClient.join(null, this.agenda_id, userWithRole, (uid) => {
       // Stream object associated with your web cam is initialized
       this.localStream = AgoraRTC.createStream({
         streamID: uid,
@@ -144,9 +158,10 @@ export class AgoraComponent implements OnInit, OnDestroy {
   }
 
   addVideoStream(streamId) {
-    let remoteContainer = document.getElementById('remote-container');
+    let remoteContainer = document.getElementById('video_call_wrapr');
     let streamDiv = document.createElement('div'); // Create a new div for every stream
     streamDiv.id = `${streamId}`; // Assigning id to div
+    streamDiv.className = 'video_col';
     streamDiv.style.transform = 'rotateY(180deg)'; // Takes care of lateral inversion (mirror image)
     remoteContainer.appendChild(streamDiv); // Add new div to container
   }
@@ -165,7 +180,8 @@ export class AgoraComponent implements OnInit, OnDestroy {
   initChat(uid) {
     let $this = this;
     let userId = uid.toString();
-    let userWithRole = userId + '.' + this.role;
+    // let userWithRole = userId + "." + this.role;
+    let userWithRole = userId;
     this.chatChannel = this.chatClient.createChannel(this.agenda_id);
     this.chatClient
       .login({ token: null, uid: userWithRole })
@@ -194,18 +210,25 @@ export class AgoraComponent implements OnInit, OnDestroy {
 
     this.chatChannel.on('ChannelMessage', ({ text }, senderId) => {
       // text: text of the received channel message; senderId: user ID of the sender.
-      var textnode = document.createElement('p'); // Create a text node
       let senderArr = senderId.split(/[.\-_]/);
-      // console.log("arr", senderArr);
-      // if (senderArr[1] == "host") {
-      //   console.log("arr[0]", senderArr[0]);
-      //   console.log("event", $this.evt_data);
-      //   let user = this.searchUserDetails('5f0851a66de63300170d9f7d', $this.evt_data.speakerList);
-      //   console.log("@@@@@@@@@@@@@@@@@@@@@user", user);
-      // }
-      textnode.innerHTML = `${senderId} :- ${text}`;
-      document.getElementById('messageSection').appendChild(textnode); // Append <li> to <ul> with id="myList"
-      console.log(`Recive message from user ${senderId} message is ${text}`);
+      console.log('arr', senderArr);
+      if (senderArr[1] == 'host') {
+        console.log('arr[0]', senderArr[0]);
+        console.log('event', $this.evt_data);
+        let user = this.searchUserDetails(
+          senderArr[0],
+          $this.evt_data.speakerList
+        );
+        console.log('SSSSSSSSSSSSSSSSSSSS@user', user);
+        this.addChatIntoView(user, text);
+      } else {
+        let user = this.searchUserDetails(
+          senderArr[0],
+          $this.evt_data.attendeeList.docs
+        );
+        console.log('@@@@@@@@@@@@@@@@@@@@@user', user);
+        this.addChatIntoView(user, text);
+      }
     });
   }
 
@@ -218,20 +241,52 @@ export class AgoraComponent implements OnInit, OnDestroy {
   }
 
   sendMessage() {
+    let $this = this;
     let text = this.message.nativeElement.value;
     console.log('message :- ', text);
     this.chatChannel
       .sendMessage({ text: text })
-      .then((sendResult) => {
-        console.log("####", sendResult)
-        var textnode = document.createElement('p'); // Create a text node
-        textnode.innerHTML = `You :- ${text}`;
-        document.getElementById('messageSection').appendChild(textnode);
-        this.sendSocketMessage(text, this.agenda_id, this.user_id)
+      .then(() => {
+        let user = this.searchUserDetails(
+          this.user_id,
+          $this.evt_data.speakerList
+        );
+        $this.message.nativeElement.value = '';
+        console.log('@@@@@@@@@@@@@@', user);
+        this.addChatIntoView(user, text);
+        this.sendSocketMessage(text, this.agenda_id, this.user_id);
       })
       .catch((error) => {
         console.log(`send message faild userId : ${text} Error: ${error}`);
       });
+  }
+
+  addChatIntoView(user, msg) {
+    var mainnode = document.createElement('div');
+    console.log('******************', mainnode);
+    var usernode = document.createElement('a');
+    usernode.className = 'user_icn';
+    var userimage = document.createElement('img');
+    userimage.src = user.profilePicThumb;
+    var namenode = document.createTextNode(
+      user.firstName + ' ' + user.lastName
+    );
+    usernode.appendChild(userimage);
+    usernode.appendChild(namenode);
+    var rolenode = document.createElement('p'); // Create a text node
+    rolenode.innerHTML = `${user.role}`;
+    var msgnode = document.createElement('p');
+    msgnode.innerHTML = `${msg}`;
+    msgnode.className = 'font_13';
+    mainnode.appendChild(usernode);
+    mainnode.appendChild(rolenode);
+    mainnode.appendChild(msgnode);
+    if (user.id === this.user_id) {
+      mainnode.className = 'outgoing_msg';
+    } else {
+      mainnode.className = 'incoming_msg';
+    }
+    document.getElementById('messageSection').appendChild(mainnode);
   }
 
   leave() {
@@ -266,25 +321,29 @@ export class AgoraComponent implements OnInit, OnDestroy {
 
   muteVideo() {
     this.localStream.muteVideo();
+    this.isMuteVideo = true;
   }
 
   unmuteVideo() {
     this.localStream.unmuteVideo();
+    this.isMuteVideo = false;
   }
 
   muteAudio() {
     this.localStream.muteAudio();
+    this.isMuteAudio = true;
   }
 
   unmuteAudio() {
     this.localStream.unmuteAudio();
+    this.isMuteAudio = false;
   }
 
   sendSocketMessage(message, channelId, userId) {
     let messageObj = {
-      msg : message,
+      msg: message,
       channelId: channelId,
-      userId: userId
+      userId: userId,
     };
     this.chatService.sendMessage(messageObj);
   }

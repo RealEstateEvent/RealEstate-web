@@ -1,0 +1,57 @@
+header{
+    padding: 14px 0;
+    background: #142e3d;
+    border-bottom: 1px solid #2a3f4b;
+}
+span.profile_name {
+    margin-left: 10px;
+}
+
+.dropdown-toggle::after {
+    vertical-align: middle;
+}
+
+.wrap_header {
+    width: 100%;
+    float: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profile_img img {
+    width: 50px;
+    border-radius: 100%;
+    height: 50px;
+    box-shadow: 0px 1px 4px #fff;
+}
+.profile_dropdown button {
+    background: transparent;
+    border: none;
+    color: #fff;
+}
+
+.profile_dropdown button:focus{
+    outline: none;
+}
+
+.logo.mg0 {
+    margin-bottom: 0;
+    color: #fff;
+}
+.profile_dropdown .dropdown-menu {
+    padding: 0px 0;
+    margin: 13px 0 0;
+    font-size: 14px;
+    border-radius: 0;
+}
+.profile_dropdown .dropdown-menu li a {
+        padding: 8px 10px;
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
+.profile_dropdown .dropdown-menu>li>a:focus,
+.profile_dropdown .dropdown-menu>li>a:hover {
+    color: #262626;
+    background-color: rgba(16, 38, 52, .2);
+}
