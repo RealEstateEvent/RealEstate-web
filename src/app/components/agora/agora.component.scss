@@ -544,13 +544,39 @@ margin-bottom: 0px;
      color: #ccc;
 }
 
+.mobile_avatar{
+    display: none;
+}
 
-@media only screen and (min-width:310px) and (max-width:768px){
+@media only screen and (min-width:310px) and (max-width:767px){
     /*===============Chat Media CSS================*/
 
-        .chat_wrapper {
-            width: 280px;
-            margin-right: -280px;
+         .mobile_avatar {
+            display: block;
+            position: absolute;
+            right: 20px;
+            top: 90px;
+            width: 110px;
+            height: 110px;
+            z-index: 99;
+            border: 5px solid #fff;
+            border-radius: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+        }
+        .mobile_avatar img {
+            border-radius: 100%;
+        }
+        .chat_wrapper.show_sidebar {
+            position: absolute;
+            width: 100%;
+            left: 0;
+        }
+        .chat_body {
+            padding: 10px 10px 10px 10px;
+        }
+        .participant_avatar {
+            width: 100px;
+            height: 100px;
         }
 
         .proj_title span{

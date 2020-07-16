@@ -76,6 +76,13 @@
      color: #fff;
      margin-bottom: 73px;
 }
+
+// .app_wrapper{
+//     position: relative;
+//     min-height: 100vh;
+//     padding-bottom: 50px;
+// }
+
 /* Custom checkbox */
  .cstm_checkbox [type="checkbox"]:not(:checked), .cstm_checkbox [type="checkbox"]:checked {
      position: absolute;
@@ -640,6 +647,7 @@
     }
      .login_wrapper {
          flex-direction: column;
+         height: auto;
     }
      .time_schdule p {
          font-size: 13px;
@@ -649,13 +657,14 @@
     }
      .login_left {
          width: 100%;
+         height: auto;
     }
      .login_left img{
          height: 271px;
          object-fit: cover;
     }
      .login_rgt {
-         width: 100%;
+         width: 70%;
          padding: 40px 15px 40px 15px;
     }
      .profile_img img {
@@ -678,8 +687,9 @@
          width: 100%;
     }
     /*=============new_media=================*/
-     .logo{
-         margin-bottom: 50px;
+
+    .login_wrapper .logo{
+         margin-bottom: 30px;
     }
      .events_col.details .event_img img {
          height: 260px;
@@ -708,18 +718,26 @@
  @media only screen and (min-width: 768px) and (max-width: 1023px){
      .login_wrapper {
          flex-direction: column;
+             height: auto;
     }
      .login_left {
          width: 100%;
+             height: 350px;
     }
      .login_left img{
-         height: 558px;
+         height: 100%;
          object-fit: cover;
     }
      .login_rgt {
-         width: 100%;
-         padding: 60px 20px 40px 20px;
+        width: 50%;
+    padding: 40px 20px 40px 20px;
+    margin: 0 auto;
     }
+
+    .login_wrapper .logo{
+        margin-bottom: 50px;
+    }
+
      .events_col {
          width: 46%;
     }
@@ -748,18 +766,24 @@
     }
      .login_wrapper {
          flex-direction: column;
+            height: auto;
     }
      .login_left {
          width: 100%;
-         height:auto;
+          height: 350px
     }
      .login_left img{
-         height: 700px;
+          height: 100%;
          object-fit: cover;
     }
      .login_rgt {
-         width: 100%;
-         padding: 40px 100px 0 100px;
+        width: 50%;
+    padding: 40px 20px 40px 20px;
+    margin: 0 auto;
+    }
+
+     .login_wrapper .logo{
+        margin-bottom: 50px;
     }
     /*============================================*/
 }
